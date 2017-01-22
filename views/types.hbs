@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <ul>
+    {{#each types}}
+        <li>{{this.option}}</li>
+        <ul>
+            {{#each this.suboptions}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    {{/each}}
+    </ul>
+</body>
+</html>

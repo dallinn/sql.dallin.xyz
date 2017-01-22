@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>genys.io</h1>
+    <p>The SQL generator</p>
+    <a href="">fork me</a>
+    <br>
+    <br>
+    <hr>
+    <label for="name">Enter table name: </label>
+    <input type="text" name="name" value="users">
+    <br>
+    What do you want to generate?:
+    <select>
+        {{#each option}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    <a href="/types">view data type</a>
+    <h3>Generate data:</h3>
+    <form action="generate">
+        <label for="count">How many entries?</label>
+        <input type="number" name="count" value=5>
+        <br>
+        <input type="submit" value="JSON" name="format">
+        <input type="submit" value="CSV" name="format">
+    </form>
+</body>
+</html>
