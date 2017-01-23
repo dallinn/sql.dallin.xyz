@@ -17,6 +17,7 @@
     <form action="generate">
     Select what kind of data you want to generate:
         <select id="type" name="type">
+            <option value=""></option>
         </select>
         <a href="/types">view data type</a>
         <div id="subtypes">
@@ -30,23 +31,5 @@
         <input type="submit" value="CSV" name="format">
     </form>
 </body>
-<script>
-    
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var types = JSON.parse(this.responseText);
-            types.forEach(function(t) {
-                var select = document.getElementById("type");
-                var opt = document.createElement('option');
-                opt.value = t.option;
-                opt.innerHTML = t.option;
-                select.appendChild(opt); 
-            });
-        }
-    }
-    xhttp.open("GET", "/types?json=1", true);
-    xhttp.send();
-</script>
+<script src="/public/js/index.js"></script>
 </html>

@@ -6,6 +6,8 @@ var json2csv= require('json2csv');
 
 app.set('view engine', 'hbs');
 
+app.use('/public/', express.static('public'));
+
 app.get('/', (req,res) => {
     var types = getFakerTypes();
 
@@ -56,8 +58,9 @@ app.listen(3000);
 function getFakerTypes(){
     var types = [];
     var options = Object.keys(faker)
-    //remove first three options from faker, unneeded
+    //remove first three options from faker and then 5th, unneeded
     options.splice(0,3);
+    options.splice(1,1);
 
     options.forEach(function(o) {
         var t = {};
