@@ -12,9 +12,18 @@ select.onchange = function() {
     var selectValue = select.value; 
     var suboptions = types[selectValue].suboptions;
     suboptions.forEach(function(s){
-        var li = document.createElement('li');
-        li.innerHTML = s;
-        div.appendChild(li);
+        var check = document.createElement("input");
+        check.type = "checkbox";
+        check.id = s;
+        check.value = s;
+
+        var label = document.createElement("label");
+        label.htmlFor = s;
+        label.appendChild(document.createTextNode(s));
+
+        div.appendChild(check);
+        div.appendChild(label);
+        div.appendChild(document.createElement("br"));
     });
 }
 // ajax to /types uri, sets all option tags from api
