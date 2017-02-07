@@ -30,7 +30,7 @@ function getTypes(){
     return(types);
 
 }
-function showSubOptions() {
+function showSubOptions(){
     while(div.hasChildNodes()){
         div.removeChild(div.lastChild);
     }
@@ -40,7 +40,7 @@ function showSubOptions() {
         var check = document.createElement('input');
         check.type = 'checkbox';
         check.id = s;
-        check.name = 'suboption';
+        check.name = 'so';
         check.value = s;
 
         var label = document.createElement('label');
@@ -52,5 +52,8 @@ function showSubOptions() {
         div.appendChild(document.createElement('br'));
     });
 }
+var form = document.getElementById('basketAdder');
 
-
+function addDataToBasket(){
+    
+}

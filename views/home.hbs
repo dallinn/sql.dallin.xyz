@@ -11,12 +11,12 @@
     <br>
     <br>
     <hr>
+    <form action="generate" id="basketAdder">
     <label for="name">Enter table name: </label>
-    <input type="text" name="name" value="users">
+    <input type="text" name="name" value="users" required>
     <br>
-    <form action="generate">
     Select what kind of data you want to generate:
-        <select id="type" name="option">
+        <select id="type" name="option" required>
             <option value=""></option>
         </select>
         <a href="/types">view data type</a>
@@ -25,7 +25,7 @@
         </div>
         <h3>Generate data:</h3>
         <label for="count">How many entries?</label>
-        <input type="number" name="count" value=5>
+        <input type="number" name="count" value="5" required>
         <br>
         <input type="submit" value="JSON" name="format">
         <input type="submit" value="CSV" name="format">

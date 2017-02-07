@@ -17,14 +17,15 @@ app.get('/', (req,res) => {
 });
 
 app.get('/generate', (req,res) => {
+    var name = req.query.name;
     var count = req.query.count;
     var format = req.query.format;
     var option = req.query.option.split(',')[0];
-    var suboption = req.query.suboption;
+    var suboption = req.query.so;
     if (typeof suboption === 'string') suboption = suboption.split();
+
     var table = [];
 
-    console.log(suboption);
     for (count; count > 0; count--) {
         var data = {};
             for (var i = 0;i < suboption.length; i++) {
@@ -32,16 +33,15 @@ app.get('/generate', (req,res) => {
             }
         table.push(data);
     }
-    console.log(table);
 
     if (format === 'JSON') {
-
+        res.send({[name]: table});
     } else if (format === 'CSV') {
         var table = json2csv({data: table, fields: Object.keys(data)});
+        res.send(table);
     } else {
        table = "Undefined format"; 
     }
-    res.send(table);
 });
 
 app.get('/types',(req,res) => {
