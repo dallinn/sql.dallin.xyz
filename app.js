@@ -19,18 +19,20 @@ app.get('/', (req,res) => {
 app.get('/generate', (req,res) => {
     var count = req.query.count;
     var format = req.query.format;
-    var type = req.query.type;
+    var option = req.query.option.split(',')[0];
+    var suboption = req.query.suboption;
+    if (typeof suboption === 'string') suboption = suboption.split();
     var table = [];
-    
+
+    console.log(suboption);
     for (count; count > 0; count--) {
-        var data = {
-           // name: faker.name.findName(),
-           // phone: faker.phone.phoneNumber(),
-           // email: faker.internet.email(),
-            type: faker.fake([type])
-        };
+        var data = {};
+            for (var i = 0;i < suboption.length; i++) {
+                data[suboption[i]] = faker[option][suboption[i]]();
+            }
         table.push(data);
     }
+    console.log(table);
 
     if (format === 'JSON') {
 
@@ -45,12 +47,13 @@ app.get('/generate', (req,res) => {
 app.get('/types',(req,res) => {
     var types = getFakerTypes();
     
-    if (req.query.json){res.send(types)};
-
-    res.render('types', {
-        types: types,
-    });
-
+    if (req.query.json){
+        res.send(types)
+    } else {
+        res.render('types', {
+            types: types,
+        });
+    };
 });
 
 app.listen(3000);

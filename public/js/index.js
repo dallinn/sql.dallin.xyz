@@ -1,30 +1,9 @@
-window.onload = function() {
-}
-
 var types = getTypes();
-var select = document.getElementById("type");
-var div = document.getElementById("subtypes");
+var select = document.getElementById('type');
+var div = document.getElementById('subtypes');
 
 select.onchange = function() {
-    while(div.hasChildNodes()){
-        div.removeChild(div.lastChild);
-    }
-    var selectValue = select.value; 
-    var suboptions = types[selectValue].suboptions;
-    suboptions.forEach(function(s){
-        var check = document.createElement("input");
-        check.type = "checkbox";
-        check.id = s;
-        check.value = s;
-
-        var label = document.createElement("label");
-        label.htmlFor = s;
-        label.appendChild(document.createTextNode(s));
-
-        div.appendChild(check);
-        div.appendChild(label);
-        div.appendChild(document.createElement("br"));
-    });
+    showSubOptions();
 }
 // ajax to /types uri, sets all option tags from api
 function getTypes(){
@@ -37,18 +16,41 @@ function getTypes(){
             var res = JSON.parse(this.responseText);
             res.forEach(function(t) {
                 var opt = document.createElement('option');
-                opt.value = res.indexOf(t);
+                //opt.value = res.indexOf(t);
+                opt.value = t.option + ',' + res.indexOf(t);
                 opt.innerHTML = t.option;
                 select.appendChild(opt); 
                 types.push(t)
             });
         }
     };
-    xhttp.open("GET", "/types?json=1", true);
+    xhttp.open('GET', '/types?json=1', true);
     xhttp.send();
-
 
     return(types);
 
 }
+function showSubOptions() {
+    while(div.hasChildNodes()){
+        div.removeChild(div.lastChild);
+    }
+    var selectValue = (select.value).split(',')[1]; 
+    var suboptions = types[selectValue].suboptions;
+    suboptions.forEach(function(s){
+        var check = document.createElement('input');
+        check.type = 'checkbox';
+        check.id = s;
+        check.name = 'suboption';
+        check.value = s;
+
+        var label = document.createElement('label');
+        label.htmlFor = s;
+        label.appendChild(document.createTextNode(s));
+
+        div.appendChild(check);
+        div.appendChild(label);
+        div.appendChild(document.createElement('br'));
+    });
+}
+
 
