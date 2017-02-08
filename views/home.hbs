@@ -11,22 +11,22 @@
     <br>
     <br>
     <hr>
-    <form action="generate" id="basketAdder">
-    <label for="name">Enter table name: </label>
-    <input type="text" name="name" value="users" required>
-    <br>
+    <form id="basketAdder">
     Select what kind of data you want to generate:
         <select id="type" name="option" required>
             <option value=""></option>
         </select>
         <a href="/types">view data type</a>
-        <div id="subtypes">
-            
-        </div>
+        <div id="subtypes"></div>
+        <div id="table"></div>
+        <br>
+    </form>
+    <form action="generate" id="generate" style="display:none">
+        <label for="name">Enter table name: </label>
+        <input type="text" name="name" value="users" required>
         <h3>Generate data:</h3>
         <label for="count">How many entries?</label>
         <input type="number" name="count" value="5" required>
-        <br>
         <input type="submit" value="JSON" name="format">
         <input type="submit" value="CSV" name="format">
     </form>
