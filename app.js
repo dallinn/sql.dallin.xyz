@@ -20,7 +20,7 @@ app.get('/generate', (req,res) => {
     var name = req.query.name;
     var count = req.query.count;
     var format = req.query.format;
-    var option = req.query.option.split(',')[0];
+    var option = req.query.option;
     var suboption = req.query.so;
     if (typeof suboption === 'string') suboption = suboption.split();
 
@@ -62,6 +62,7 @@ function getFakerTypes(){
     var types = [];
     var options = Object.keys(faker)
     //remove first three options from faker and then 5th, unneeded
+    //TODO: remove helpers option
     options.splice(0,3);
     options.splice(1,1);
 

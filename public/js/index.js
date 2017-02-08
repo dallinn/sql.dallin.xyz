@@ -18,7 +18,7 @@ function getTypes(){
             res.forEach(function(t) {
                 var opt = document.createElement('option');
                 //opt.value = res.indexOf(t);
-                opt.value = t.option + ',' + res.indexOf(t);
+                opt.value = t.option;
                 opt.innerHTML = t.option;
                 select.appendChild(opt); 
                 types.push(t)
@@ -36,8 +36,9 @@ function showSubOptions(){
         div.removeChild(div.lastChild);
     }
 
-    var selectValue = (select.value).split(',')[1]; 
-    var suboptions = types[selectValue].suboptions;
+    var selectValue = select.value; 
+    var suboptions = types.filter(function(v){ return v.option === selectValue })[0].suboptions; 
+    console.log(suboptions);
     suboptions.forEach(function(s){
         var check = document.createElement('input');
         check.type = 'checkbox';
