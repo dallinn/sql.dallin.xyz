@@ -1,10 +1,13 @@
-var express = require('express');
-var hbs     = require('hbs');
-var app     = express();
-var faker   = require('faker');
-var json2csv= require('json2csv');
+var express    = require('express');
+var hbs        = require('hbs');
+var app        = express();
+var faker      = require('faker');
+var json2csv   = require('json2csv');
+var bodyParser = require('body-parser');
 
 app.set('view engine', 'hbs');
+
+app.use(bodyParser.json()); 
 
 app.use('/public/', express.static('public'));
 
@@ -16,32 +19,43 @@ app.get('/', (req,res) => {
     });
 });
 
-app.get('/generate', (req,res) => {
-    var name = req.query.name;
-    var count = req.query.count;
-    var format = req.query.format;
-    var option = req.query.option;
-    var suboption = req.query.so;
-    if (typeof suboption === 'string') suboption = suboption.split();
+app.post('/generate', (req,res) => {
+    var all = req.body;
+   // var name = req.body.info;
+   // console.log(name);
+   // var count = req.body.info;
+   // var format = req.body.info;
+    all.forEach(function(a){
+       console.log(a); 
+       console.log();
+    });
 
-    var table = [];
+    res.end('workin');
+  //  var name = req.query.name;
+  //  var count = req.query.count;
+  //  var format = req.query.format;
+  //  var option = req.query.option;
+  //  var suboption = req.query.so;
+  //  if (typeof suboption === 'string') suboption = suboption.split();
 
-    for (count; count > 0; count--) {
-        var data = {};
-            for (var i = 0;i < suboption.length; i++) {
-                data[suboption[i]] = faker[option][suboption[i]]();
-            }
-        table.push(data);
-    }
+  //  var table = [];
 
-    if (format === 'JSON') {
-        res.send({[name]: table});
-    } else if (format === 'CSV') {
-        var table = json2csv({data: table, fields: Object.keys(data)});
-        res.send(table);
-    } else {
-       table = "Undefined format"; 
-    }
+  //  for (count; count > 0; count--) {
+  //      var data = {};
+  //          for (var i = 0;i < suboption.length; i++) {
+  //              data[suboption[i]] = faker[option][suboption[i]]();
+  //          }
+  //      table.push(data);
+  //  }
+
+  //  if (format === 'JSON') {
+  //      res.send({[name]: table});
+  //  } else if (format === 'CSV') {
+  //      var table = json2csv({data: table, fields: Object.keys(data)});
+  //      res.send(table);
+  //  } else {
+  //     table = "Undefined format"; 
+  //  }
 });
 
 app.get('/types',(req,res) => {

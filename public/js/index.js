@@ -38,7 +38,6 @@ function showSubOptions(){
 
     var selectValue = select.value; 
     var suboptions = types.filter(function(v){ return v.option === selectValue })[0].suboptions; 
-    console.log(suboptions);
     suboptions.forEach(function(s){
         var check = document.createElement('input');
         check.type = 'checkbox';
@@ -96,28 +95,76 @@ function addDataToBasket(){
     });
 
     var genForm = document.getElementById('generate');
-    genForm.style.display = 'block';
-    genForm.onsubmit = function(){
-        var all = table.children;
+    var format;
 
-        for (var i = 0; i<all.length; i++){
-            for (var j = 0; j<all[i].children.length; j++){
-                var hidden = document.createElement('input');
-                hidden.type = 'hidden';
-                if (all[i].children[j].tagName == 'H4'){
-                    hidden.name = 'option';
-                    hidden.value = all[i].children[j].innerHTML;
-                    console.log('OPTION: ' + all[i].children[j].innerHTML);
-                } else {
-                    hidden.name = 'so';
-                    hidden.value = all[i].children[j].innerHTML;
-                    console.log('SUBOPTIONS:' + all[i].children[j].innerHTML);
-                }
-            genForm.appendChild(hidden);
+    document.getElementById('json').onclick = function() {
+        format = this.value;
+    }
+    document.getElementById('csv').onclick = function() {
+        format = this.value;
+    }
+
+    genForm.style.display = 'block';
+    genForm.onsubmit = function(event){
+        event.preventDefault();
+        var send = [];
+
+        var info = {
+            info: {
+                name: event.target[0].value,
+                count: event.target[1].value,
+                format: format
+            } 
+        };
+        send.push(info);
+
+        var groups = table.getElementsByTagName('div');
+        for (var i = 0; i<groups.length; i++){
+            var data = {};
+
+            var opt = groups[i].firstChild.innerHTML;
+            data.option = opt;
+
+            var sopts = groups[i].getElementsByTagName('li');
+            var s = [];
+            for (var j = 0; j<sopts.length; j++){
+                s.push(sopts[j].innerHTML);
+            }
+            data.suboptions = s;
+
+            send.push(data); 
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/generate");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.onreadystatechange = function(){
+            if(xhttp.readyState == 4 && xhttp.status == 200) {
+                console.log(xhttp.responseText);
             }
         }
-        console.log(genForm.children);
-        //event.preventDefault();
+        xhttp.send(JSON.stringify(send));
+
+
+
+     //   var all = table.children;
+     //   for (var i = 0; i<all.length; i++){
+     //       for (var j = 0; j<all[i].children.length; j++){
+     //           var hidden = document.createElement('input');
+     //           hidden.type = 'hidden';
+     //           if (all[i].children[j].tagName == 'H4'){
+     //               hidden.name = 'option';
+     //               hidden.value = all[i].children[j].innerHTML;
+     //               console.log('OPTION: ' + all[i].children[j].innerHTML);
+     //           } else {
+     //               hidden.name = 'so';
+     //               hidden.value = all[i].children[j].innerHTML;
+     //               console.log('SUBOPTIONS:' + all[i].children[j].innerHTML);
+     //           }
+     //       genForm.appendChild(hidden);
+     //       }
+     //   }
+     //   console.log(genForm.children);
 
     }
 }
