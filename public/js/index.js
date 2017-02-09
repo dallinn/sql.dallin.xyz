@@ -107,17 +107,13 @@ function addDataToBasket(){
     genForm.style.display = 'block';
     genForm.onsubmit = function(event){
         event.preventDefault();
-        var send = [];
-
-        var info = {
-            info: {
-                name: event.target[0].value,
-                count: event.target[1].value,
-                format: format
-            } 
+        var send = {
+            name: event.target[0].value,
+            count: event.target[1].value,
+            format: format
         };
-        send.push(info);
 
+        var body = [];
         var groups = table.getElementsByTagName('div');
         for (var i = 0; i<groups.length; i++){
             var data = {};
@@ -131,9 +127,9 @@ function addDataToBasket(){
                 s.push(sopts[j].innerHTML);
             }
             data.suboptions = s;
-
-            send.push(data); 
+            body.push(data);
         }
+            send.tables = body; 
 
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/generate");

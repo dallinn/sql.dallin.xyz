@@ -20,17 +20,52 @@ app.get('/', (req,res) => {
 });
 
 app.post('/generate', (req,res) => {
+    console.log(req.body);
+    console.log();
+
     var all = req.body;
-   // var name = req.body.info;
-   // console.log(name);
-   // var count = req.body.info;
-   // var format = req.body.info;
-    all.forEach(function(a){
-       console.log(a); 
-       console.log();
+    var name = req.body.name;
+    var count = req.body.count;
+    var format = req.body.format;
+    var tables = req.body.tables;
+
+    console.log('all ' + req.body);
+    console.log('name ' + name);
+    console.log('count ' + count);
+    console.log('format ' + format);
+    console.log();
+
+    var table = [];
+    var tt0 = [];
+
+    //my algorithms professor cries as bigo soars into the eternal
+    tables.forEach(function(t){
+        var data = {
+            [t.option]: {}
+        };
+        for (j=count; j > 0; j--){
+            var tt1 = [];
+                for (var i = 0;i<t.suboptions.length;i++){
+                    // data[t.option][t.suboptions[i]] = faker[t.option][t.suboptions[i]]();
+                 //   if (i == 0 && j == count) tt0.push({ [t.option]: {} });
+                    tt1.push({ 
+                        [t.suboptions[i]]: faker[t.option][t.suboptions[i]]()
+                    });
+                     
+                }
+           // console.log(tt1);
+            tt0.push(tt1);
+
+        }
+        data[t.option] = tt0;
+        table.push(data);
     });
 
-    res.end('workin');
+    console.log(table);
+
+
+
+    res.end(JSON.stringify(table));
   //  var name = req.query.name;
   //  var count = req.query.count;
   //  var format = req.query.format;
