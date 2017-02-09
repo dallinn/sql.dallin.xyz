@@ -35,53 +35,42 @@ app.post('/generate', (req,res) => {
     console.log('format ' + format);
     console.log();
 
-    var table = [];
-    var tt0 = [];
+ //   desired output
+ //   var returned = {
+ //       users: {
+ //         name: {
+ //             { firstName: xxx, lastName: xxx, findName: xxx },
+ //             { firstName: xxx, lastName: xxx, findName: xxx },
+ //             { firstName: xxx, lastName: xxx, findName: xxx },
+ //             { firstName: xxx, lastName: xxx, findName: xxx },
+ //             { firstName: xxx, lastName: xxx, findName: xxx }
+ //         },
+ //         address: {
+ //
+ //         }
+ //       }
+ //   };
 
-    //my algorithms professor cries as bigo soars into the eternal
+    var returned = {
+        [name]: {},
+    };
+
+    //need suboption values TODO
     tables.forEach(function(t){
-        var data = {
-            [t.option]: {}
-        };
+        var tt = [];
         for (j=count; j > 0; j--){
             var tt1 = [];
                 for (var i = 0;i<t.suboptions.length;i++){
-                    // data[t.option][t.suboptions[i]] = faker[t.option][t.suboptions[i]]();
-                 //   if (i == 0 && j == count) tt0.push({ [t.option]: {} });
-                    tt1.push({ 
-                        [t.suboptions[i]]: faker[t.option][t.suboptions[i]]()
-                    });
-                     
+                    tt1.push(faker[t.option][t.suboptions[i]]());
                 }
-           // console.log(tt1);
-            tt0.push(tt1);
-
+            tt.push(tt1);
         }
-        data[t.option] = tt0;
-        table.push(data);
+        returned[name][t.option] = tt;
     });
+    
+    console.log(JSON.stringify(returned));
 
-    console.log(table);
-
-
-
-    res.end(JSON.stringify(table));
-  //  var name = req.query.name;
-  //  var count = req.query.count;
-  //  var format = req.query.format;
-  //  var option = req.query.option;
-  //  var suboption = req.query.so;
-  //  if (typeof suboption === 'string') suboption = suboption.split();
-
-  //  var table = [];
-
-  //  for (count; count > 0; count--) {
-  //      var data = {};
-  //          for (var i = 0;i < suboption.length; i++) {
-  //              data[suboption[i]] = faker[option][suboption[i]]();
-  //          }
-  //      table.push(data);
-  //  }
+    res.end(JSON.stringify(returned));
 
   //  if (format === 'JSON') {
   //      res.send({[name]: table});
