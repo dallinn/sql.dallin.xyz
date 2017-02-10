@@ -12,11 +12,7 @@ app.use(bodyParser.json());
 app.use('/public/', express.static('public'));
 
 app.get('/', (req,res) => {
-    var types = getFakerTypes();
-
-    res.render('home', {
-        types: types,
-    });
+    res.render('home');
 });
 
 app.post('/generate', (req,res) => {
