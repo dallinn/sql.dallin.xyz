@@ -31,22 +31,6 @@ app.post('/generate', (req,res) => {
     console.log('format ' + format);
     console.log();
 
- //   desired output
- //   var returned = {
- //       users: {
- //         name: {
- //             { firstName: xxx, lastName: xxx, findName: xxx },
- //             { firstName: xxx, lastName: xxx, findName: xxx },
- //             { firstName: xxx, lastName: xxx, findName: xxx },
- //             { firstName: xxx, lastName: xxx, findName: xxx },
- //             { firstName: xxx, lastName: xxx, findName: xxx }
- //         },
- //         address: {
- //
- //         }
- //       }
- //   };
-
     var returned = {
         [name]: {},
     };

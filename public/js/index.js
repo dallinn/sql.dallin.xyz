@@ -17,7 +17,6 @@ function getTypes(){
             var res = JSON.parse(this.responseText);
             res.forEach(function(t) {
                 var opt = document.createElement('option');
-                //opt.value = res.indexOf(t);
                 opt.value = t.option;
                 opt.innerHTML = t.option;
                 select.appendChild(opt); 
@@ -43,7 +42,7 @@ function showSubOptions(){
         check.type = 'checkbox';
         check.id = s;
         check.name = 'so';
-        //TODO: format values
+        //TODO: format values for human readability on front end
         check.value = s;
 
         var label = document.createElement('label');
@@ -140,27 +139,5 @@ function addDataToBasket(){
             }
         }
         xhttp.send(JSON.stringify(send));
-
-
-
-     //   var all = table.children;
-     //   for (var i = 0; i<all.length; i++){
-     //       for (var j = 0; j<all[i].children.length; j++){
-     //           var hidden = document.createElement('input');
-     //           hidden.type = 'hidden';
-     //           if (all[i].children[j].tagName == 'H4'){
-     //               hidden.name = 'option';
-     //               hidden.value = all[i].children[j].innerHTML;
-     //               console.log('OPTION: ' + all[i].children[j].innerHTML);
-     //           } else {
-     //               hidden.name = 'so';
-     //               hidden.value = all[i].children[j].innerHTML;
-     //               console.log('SUBOPTIONS:' + all[i].children[j].innerHTML);
-     //           }
-     //       genForm.appendChild(hidden);
-     //       }
-     //   }
-     //   console.log(genForm.children);
-
     }
 }
