@@ -97,11 +97,11 @@ app.get('/types',(req,res) => {
 app.listen(3000);
 
 function getFakerTypes(){
+    console.log(1);
     var types = [];
     var options = Object.keys(faker)
-    //remove first three options from faker and then 5th, unneeded
-    //TODO: remove helpers option
-    options.splice(0,3);
+    //remove uneeded faker types
+    options.splice(0,5);
     options.splice(1,1);
 
     options.forEach(function(o) {
