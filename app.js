@@ -51,13 +51,12 @@ app.post('/generate', (req,res) => {
         [name]: {},
     };
 
-    //need suboption values TODO
     tables.forEach(function(t){
         var tt = [];
         for (j=count; j > 0; j--){
             var tt1 = [];
                 for (var i = 0;i<t.suboptions.length;i++){
-                    tt1.push(faker[t.option][t.suboptions[i]]());
+                    tt1.push({ [t.suboptions[i]]: faker[t.option][t.suboptions[i]]()} );
                 }
             tt.push(tt1);
         }
