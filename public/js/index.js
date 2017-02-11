@@ -136,6 +136,8 @@ function addDataToBasket(){
         xhttp.onreadystatechange = function(){
             if(xhttp.readyState == 4 && xhttp.status == 200) {
                 window.location.href = xhttp.responseText;
+            } else if (xhttp.readyState == 4 && xhttp.status == 501) {
+                alert('too many entries, please enter a lower number');
             }
         }
         xhttp.send(JSON.stringify(send));

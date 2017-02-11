@@ -24,6 +24,8 @@ app.post('/generate', (req,res) => {
     var format = req.body.format;
     var tables = req.body.tables;
 
+    if (count > 100000) return res.sendStatus(501);
+
     var returned = {};
 
     tables.forEach(function(t){
@@ -81,7 +83,6 @@ app.get('/types',(req,res) => {
 app.listen(3000);
 
 function getFakerTypes() {
-    console.log(1);
     var types = [];
     var options = Object.keys(faker)
     //remove uneeded faker types
