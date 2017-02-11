@@ -11,15 +11,23 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json()); 
 
 app.use('/public/', express.static('public'));
-app.use('/json/', express.static('json'));
+//app.use('/json/', express.static('json'));
 
 app.get('/', (req,res) => {
     res.render('home');
 });
 
+app.get('/json/:filename', (req,res) => {
+    var fn = req.params.filename;
+    var dir = fn.split('_')[1];
+    console.log(dir);
+    console.log(fn);
+    res.sendFile(__dirname + '/json/' + dir + '/' + fn);
+});
+
 app.post('/generate', (req,res) => {
     var all = req.body;
-    var name = req.body.name;
+    var name = req.body.name; //TODO: sanitize to not allow underscores
     var count = req.body.count;
     var format = req.body.format;
     var tables = req.body.tables;
@@ -49,10 +57,10 @@ app.post('/generate', (req,res) => {
 
         if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
-        var filename = dir + '/' + name + date +'.json';
-        fs.writeFile(filename, json, 'utf8', function(err){
+        var filename = name + '_' + date +'.json';
+        fs.writeFile(dir + '/' + filename, json, 'utf8', function(err){
             if(err) throw err;
-            res.send(filename);
+            res.send('/json/' + filename);
         });
     } else if (format === 'CSV') {
         //TODO: proper csv format
@@ -105,9 +113,9 @@ function fileDateFormat() {
     var day = d.getDate();
     var h = d.getHours();
     var min = d.getMinutes();
-    var ms = d.valueOf();
+    var ms = d.valueOf().toString().slice(7);
     var dirform = m + '-' + day;
-    var fileform = m + '-' + day + '_' + h + '-' + min + '-' + ms;
+    var fileform = m + '-' + day + '_' + ms;
     return({ dir: dirform, date: fileform });
     
 }
