@@ -135,7 +135,7 @@ function addDataToBasket(){
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.onreadystatechange = function(){
             if(xhttp.readyState == 4 && xhttp.status == 200) {
-                console.log(xhttp.responseText);
+                window.location.href = xhttp.responseText;
             }
         }
         xhttp.send(JSON.stringify(send));
