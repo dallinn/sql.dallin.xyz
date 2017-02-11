@@ -99,9 +99,9 @@ function addDataToBasket(){
     document.getElementById('json').onclick = function() {
         format = this.value;
     }
-    document.getElementById('csv').onclick = function() {
-        format = this.value;
-    }
+//    document.getElementById('csv').onclick = function() {
+//        format = this.value;
+//    }
 
     genForm.style.display = 'block';
     genForm.onsubmit = function(event){

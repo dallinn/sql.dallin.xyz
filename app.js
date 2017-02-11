@@ -16,24 +16,13 @@ app.get('/', (req,res) => {
 });
 
 app.post('/generate', (req,res) => {
-    console.log(req.body);
-    console.log();
-
     var all = req.body;
     var name = req.body.name;
     var count = req.body.count;
     var format = req.body.format;
     var tables = req.body.tables;
 
-    console.log('all ' + req.body);
-    console.log('name ' + name);
-    console.log('count ' + count);
-    console.log('format ' + format);
-    console.log();
-
-    var returned = {
-        [name]: {},
-    };
+    var returned = {};
 
     tables.forEach(function(t){
         var tt = [];
@@ -44,21 +33,23 @@ app.post('/generate', (req,res) => {
                 }
             tt.push(tt1);
         }
-        returned[name][t.option] = tt;
+        returned[t.option] = tt;
     });
-    
-    console.log(JSON.stringify(returned));
 
-    res.end(JSON.stringify(returned));
-
-  //  if (format === 'JSON') {
-  //      res.send({[name]: table});
-  //  } else if (format === 'CSV') {
-  //      var table = json2csv({data: table, fields: Object.keys(data)});
-  //      res.send(table);
-  //  } else {
-  //     table = "Undefined format"; 
-  //  }
+    if (format === 'JSON') {
+        res.send(JSON.stringify(returned));
+    } else if (format === 'CSV') {
+        //TODO: proper csv format
+        //var data = Object.keys(returned).map(function(key) {
+        //    console.log(key);
+        //    return returned[key];
+        //});
+        //var csv = json2csv({ data: data, fields: Object.keys(returned) });
+        //res.send(data);
+        res.send('CSV coming soon');
+    } else {
+        res.send('Undefined format'); 
+    }
 });
 
 app.get('/types',(req,res) => {
