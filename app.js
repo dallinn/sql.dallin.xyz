@@ -27,12 +27,14 @@ app.get('/json/:filename', (req,res) => {
 
 app.post('/generate', (req,res) => {
     var all = req.body;
-    var name = req.body.name; //TODO: sanitize to not allow underscores
+    var name = req.body.name; 
     var count = req.body.count;
     var format = req.body.format;
     var tables = req.body.tables;
 
-    if (count > 100000) return res.sendStatus(501);
+    if (name.indexOf('_') >= 0) return res.status(500).send('no underscores allowed in table name');
+
+    if (count > 100000) return res.status(500).send('please use a lower count');
 
     var returned = {};
 
