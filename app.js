@@ -11,7 +11,6 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json()); 
 
 app.use('/public/', express.static('public'));
-//app.use('/json/', express.static('json'));
 
 app.get('/', (req,res) => {
     res.render('home');
@@ -20,8 +19,6 @@ app.get('/', (req,res) => {
 app.get('/json/:filename', (req,res) => {
     var fn = req.params.filename;
     var dir = fn.split('_')[1];
-    console.log(dir);
-    console.log(fn);
     res.sendFile(__dirname + '/json/' + dir + '/' + fn);
 });
 
@@ -89,7 +86,6 @@ app.get('/types',(req,res) => {
         });
     };
 });
-
 app.listen(3000);
 
 function getFakerTypes() {
